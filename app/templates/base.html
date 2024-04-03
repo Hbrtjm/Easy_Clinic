@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    <title>{% block title %}{% endblock %} - Easy Clinic</title>
+    {% endblock %}
+    {% block styles %}{% endblock %}
+    <script>
+        function goTo(page_name) {
+            window.location.href = page_name;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="root">
+        <nav>
+            <ul>
+
+                <li>
+                    <button id="add-patients" onClick="goTo(this.id)">Add patient</button>
+                </li>
+                <li>
+                    <button id="list-patients" onClick="goTo(this.id)">List all patients</button>
+                </li>
+                <li>
+                    <button id="delete-patient" onClick="goTo(this.id)">Delete patient</button>
+                </li>
+                <li>
+                    <button id="edit-patients" onClick="goTo(this.id)">Edit patient</button>
+                </li>
+            </ul>
+        </nav>
+        <div id="content">
+            {% block content %} {% endblock %}
+        </div>
+        <div id="footer">
+            {% block footer %}
+            &copy; Copyright 2024 by <a href="http://github.com/Hbrtjm">Hbrtjm</a>.
+            {% endblock %}
+        </div>
+</body>
+
+</html>
