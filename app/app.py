@@ -1,15 +1,21 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import re
+import os.path
 
-
+db = SQLAlchemy()
 app = Flask(__name__)
+db_name = 'Patients.db'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, db_name)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Patients.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
 
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-
+# initialize the app with Flask-SQLAlchemy
+db.init_app(app)
 class Patient(db.Model):
     PESEL = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
@@ -55,9 +61,11 @@ def add_patients():
 @app.route("/list-patients", methods=["GET"])
 def list_patients():
     if request.method == "GET":
-        return render_template("list_patients.html")
-    else:
-        return render_template("bad_request.html")
+        try:    
+            search = f'.*{request.form.get("search")}.*'
+            db.session.get()
+        except:
+            return render_template("list_patients.html")
 
 
 @app.route("/delete-patients", methods=["DELETE", "GET"])
@@ -70,7 +78,7 @@ def delete_patient():
         return render_template("bad_request.html")
 
 
-@app.route("/delete-patient", methods=["EDIT", "GET"])
+@app.route("/edit-patient", methods=["EDIT", "GET"])
 def edit_patient():
     if request.method == "EDIT":
         return render_template("edit_patient.html")

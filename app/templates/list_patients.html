@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Listing patients{% endblock %}
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+
+{% block content %}
+<main>
+    <form function="GET">
+        <input type="text" id="search" placeholder="Wpisz szukanego pacjenta">
+        <button type="submit">Search</button>
+    </form>
+    <form>
+
+    </form>
+</main>
+{% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Usuń pacjenta{% endblock %}
+{% block title %}Edytuj pacjenta{% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='patient_editor.css') }}">{% endblock %}
 {% block content %}
@@ -11,7 +11,7 @@
                 <label for="PESEL">PESEL</label>
                 <input type="number" id="PESEL" placeholder="Wpisz numer PESEL pacjenta">
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">Edit</button>
         </form>
     </div>
 
