@@ -6,11 +6,11 @@ Application allows user to add a new patient,  delete a patient and list patient
     1. Using only CLI
     2. Using docker
 
-### Using only CLI
+# Using only CLI
 
 On linux machine open up terminal. Alternatively, on windows any IDE's should work too. My reccomendation is Visual Studio Code
 
-##    Downloading files
+## Downloading files
         
 1. Clone this repository to your local machine using:
 
@@ -38,9 +38,9 @@ python -m flask run
 4. After running the app in terminal there should be a url to localhost. Use this link in any browser. The address shoudl be `http://0.0.0.0:5000`
 
 
-### Using docker 
+# Using docker 
 
-## Note: this requires Docker to be installed. Installation guide here: https://docs.docker.com/get-docker/ 
+### Note: this requires Docker to be installed. Installation guide here: https://docs.docker.com/get-docker/ 
 
 ## Building the Docker Image
 
