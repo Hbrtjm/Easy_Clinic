@@ -7,6 +7,9 @@
     <div class="form-container">
             <form action="/add-patients" method="POST">
                 <h2>Add patient</h2>
+                {% if message %}
+                <p>{{message}}</p>
+                {% endif %}
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input class="input-box" type="text" id="name" name="name" placeholder="Please enter patient's name...">
