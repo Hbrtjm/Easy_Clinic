@@ -186,4 +186,4 @@ def bad_request(e):
     return render_template("method_not_allowed.html")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')

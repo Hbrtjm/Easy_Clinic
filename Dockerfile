@@ -1,15 +1,15 @@
+FROM python:3.8-slim
 
-FROM python:3.9
-
-COPY app .
+COPY . .
 
 COPY requirements.txt requirements.txt
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN cd ./app
+WORKDIR /usr/src/Essato_internship/app
 
 EXPOSE 5000
 
-CMD [ "python", "-m", "flask", "run" ]
+ENV NAME World
 
+CMD [ "python", "-m", "flask", "run" ]
