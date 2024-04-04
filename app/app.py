@@ -8,13 +8,14 @@ import glob
 
 app = Flask(__name__)
 app.secret_key = "jBIja3uLPrymArN452fMKdPnFJhgY1UYREoU5qad51b4aE0QgI4Dn6iGCmh8A8tQ"
-db_name = 'Patients.db'
+db_name = "Patients.db"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, db_name)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + db_path
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
 
 class Patient(db.Model):
     PESEL = db.Column(db.Integer, primary_key=True)
@@ -23,13 +24,16 @@ class Patient(db.Model):
     street = db.Column(db.String(200))
     city = db.Column(db.String(200))
     zip_code = db.Column(db.String(7))
+
     def __repr__(self):
         return f"<Patient {self.name}>"
 
+
 @app.before_request
 def create_database():
-    if not glob.glob(BASE_DIR + '/Patients.db'):
+    if not glob.glob(BASE_DIR + "/Patients.db"):
         db.create_all()
+
 
 @app.route("/", methods=["GET"])
 def homepage():
@@ -56,72 +60,106 @@ def add_patients():
         )
         db.session.add(patient)
         db.session.commit()
-        return render_template("add_patients.html",message="Patient added successfully")
+        return render_template(
+            "add_patients.html", message="Patient added successfully"
+        )
     elif request.method == "GET":
         return render_template("add_patients.html")
+
 
 @app.route("/list-patients", methods=["GET"])
 def list_patients():
     if request.method == "GET":
-        names=[]
-        patients=[]
+        names = []
+        patients = []
         message = "Here all of the search or sorted patients will be listed"
-        return render_template("list_patients.html",atients=patients,names=names,message=message)
+        return render_template(
+            "list_patients.html", atients=patients, names=names, message=message
+        )
 
 
 @app.route("/list-patients-search", methods=["POST"])
 def list_patients_search():
 
     def search_patient(x):
-        patient,option,value = x
-        if re.search(value,patient[option]):
+        patient, option, value = x
+        if re.search(value, str(patient[option])):
             return True
         else:
             return False
 
     if request.method == "POST":
-        value=request.form["search"]
-        option=request.form["option"]
+        value = request.form["search"]
+        option = request.form["option"]
         sort_by = request.form["sort-by"]
-        
+
         # Here I am not sure how to get an attribute of an database object that is given in string
         # So I rewrite all of the data into a dictionary, it might not be the best way to do it
         message = "The list of patients is empty"
-        patients_list=Patient.query.all()
-        patients = [ { "PESEL":patient.PESEL, "name":patient.name, "surname":patient.surname, "street":patient.street, "city":patient.city, "zip_code":patient.zip_code } for patient in patients_list ] 
-        names=["PESEL", "name", "surname", "street", "city", "zip_code"]
-        patients_to_search = [ (patient,option,value) for patient in patients ]
-        patients_to_search = filter(search_patient,patients_to_search)
-        patients = [ patient for patient, option, value in patients_to_search ]
+        patients_list = Patient.query.all()
+        patients = [
+            {
+                "PESEL": patient.PESEL,
+                "name": patient.name,
+                "surname": patient.surname,
+                "street": patient.street,
+                "city": patient.city,
+                "zip_code": patient.zip_code,
+            }
+            for patient in patients_list
+        ]
+        names = ["PESEL", "name", "surname", "street", "city", "zip_code"]
+        patients_to_search = [(patient, option, value) for patient in patients]
+        patients_to_search = filter(search_patient, patients_to_search)
+        patients = [patient for patient, option, value in patients_to_search]
         if sort_by != "none":
-            patients = sorted(patients,key=lambda patient: patient[sort_by])
+            patients = sorted(patients, key=lambda patient: patient[sort_by])
         if len(patients) != 0:
             if sort_by != "none":
-                message = f"List of all patients for query \"{value}\" sorted by {sort_by}"
+                message = (
+                    f'List of all patients for query "{value}" sorted by {sort_by}'
+                )
             else:
-                message = f"List of all patients for query \"{value}\" sorted by PESEL"
-        return render_template("list_patients.html",patients=patients,names=names, message=message)
+                message = f'List of all patients for query "{value}" sorted by PESEL'
+        return render_template(
+            "list_patients.html", patients=patients, names=names, message=message
+        )
     else:
-        abort(405,description="Method not allowed")
+        abort(405, description="Method not allowed")
+
+
 @app.route("/list-patients-sort", methods=["POST"])
 def list_patients_sort():
     if request.method == "POST":
         message = "The list of patients is empty"
         option = request.form["option"]
-        patients_list=Patient.query.all()
-        patients = [ { "PESEL":patient.PESEL, "name":patient.name, "surname":patient.surname, "street":patient.street, "city":patient.city, "zip_code":patient.zip_code } for patient in patients_list ] 
-        names=["PESEL", "name", "surname", "street", "city", "zip_code"]
-        patients = sorted(patients,key=lambda patient: patient[option])
+        patients_list = Patient.query.all()
+        patients = [
+            {
+                "PESEL": patient.PESEL,
+                "name": patient.name,
+                "surname": patient.surname,
+                "street": patient.street,
+                "city": patient.city,
+                "zip_code": patient.zip_code,
+            }
+            for patient in patients_list
+        ]
+        names = ["PESEL", "name", "surname", "street", "city", "zip_code"]
+        patients = sorted(patients, key=lambda patient: patient[option])
         if len(patients) != 0:
             message = f"List of patients sorted by {option}"
-        return render_template("list_patients.html",patients=patients,names=names,message=message)
+        return render_template(
+            "list_patients.html", patients=patients, names=names, message=message
+        )
     else:
-        abort(405,description="Method not allowed")
+        abort(405, description="Method not allowed")
+
 
 @app.route("/delete-patient", methods=["POST", "GET"])
 def delete_patient():
     if request.method == "POST":
-        PESEL = request.form["PESEL"]    
+        PESEL = request.form["PESEL"]
         patient_to_delete = Patient.query.get(PESEL)
         if patient_to_delete:
             try:
@@ -129,19 +167,24 @@ def delete_patient():
                 db.session.commit()
             except Exception as e:
                 abort(500, description=str(e))
-            return render_template('delete_patient.html',message="Patient deleted successfully")
+            return render_template(
+                "delete_patient.html", message="Patient deleted successfully"
+            )
         else:
-            return render_template('delete_patient.html',message="Patient doesn't exist in the database")
+            return render_template(
+                "delete_patient.html", message="Patient doesn't exist in the database"
+            )
     elif request.method == "GET":
         return render_template("delete_patient.html")
     else:
         abort(405, description="Bad request")
 
-@app.route("/edit-patient", methods=["GET","POST"])
+
+@app.route("/edit-patient", methods=["GET", "POST"])
 def edit_patient():
     if request.method == "GET":
         return render_template("edit_patient.html")
-    
+
     elif request.method == "POST":
         try:
             option = request.form["option"]
@@ -152,7 +195,7 @@ def edit_patient():
         if not patient_to_edit:
             abort(404, description="Patient not found")
 
-        data = request.form.get("modified_value") 
+        data = request.form.get("modified_value")
         if not data:
             abort(400, description="No data provided")
         if hasattr(patient_to_edit, option):
@@ -162,7 +205,9 @@ def edit_patient():
 
         try:
             db.session.commit()
-            return render_template("edit_patient.html",message="Patient updated successfully!")
+            return render_template(
+                "edit_patient.html", message="Patient updated successfully!"
+            )
         except Exception as e:
             abort(500, description=str(e))
     else:
@@ -173,17 +218,21 @@ def edit_patient():
 def page_not_found(e):
     return render_template("not_found.html")
 
+
 @app.errorhandler(400)
 def bad_request(e):
     return render_template("bad_request.html")
+
 
 @app.errorhandler(500)
 def bad_request(e):
     return render_template("internal_server_error.html")
 
+
 @app.errorhandler(405)
 def bad_request(e):
     return render_template("method_not_allowed.html")
 
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host="0.0.0.0")
