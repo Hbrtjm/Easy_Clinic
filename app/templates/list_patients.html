@@ -16,6 +16,7 @@
             <input type="text" id="search" name="search" placeholder="Input your query...">
             <label for="option">Select for which element you are searching</label>
             <select name="option" id="option">
+                <option value="PESEL">PESEL</option>
                 <option value="name">Name</option>
                 <option value="surname">Surname</option>
                 <option value="street">Street</option>
@@ -25,6 +26,7 @@
             <label for="option">Sort results by</label>
             <select name="sort-by" id="sort-by">
                 <option value="none">Selet sort option...</option>
+                <option value="PESEL">PESEL</option>
                 <option value="name">Name</option>
                 <option value="surname">Surname</option>
                 <option value="street">Street</option>
@@ -36,7 +38,9 @@
     </form>
     <form action="/list-patients-sort" method="POST">
         <div class="sort-box">
+            <label for="option">List all patients and sort by</label>
             <select name="option" id="option">
+                <option value="PESEL">PESEL</option>
                 <option value="name">Name</option>
                 <option value="surname">Surname</option>
                 <option value="street">Street</option>

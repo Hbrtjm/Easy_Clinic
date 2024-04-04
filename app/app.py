@@ -66,7 +66,7 @@ def list_patients():
         names=[]
         patients=[]
         message = "Here all of the search or sorted patients will be listed"
-        return render_template("list_patients.html",atients=patients,names=names)
+        return render_template("list_patients.html",atients=patients,names=names,message=message)
 
 
 @app.route("/list-patients-search", methods=["POST"])
@@ -112,6 +112,8 @@ def list_patients_sort():
         patients = [ { "PESEL":patient.PESEL, "name":patient.name, "surname":patient.surname, "street":patient.street, "city":patient.city, "zip_code":patient.zip_code } for patient in patients_list ] 
         names=["PESEL", "name", "surname", "street", "city", "zip_code"]
         patients = sorted(patients,key=lambda patient: patient[option])
+        if len(patients) != 0:
+            message = f"List of patients sorted by {option}"
         return render_template("list_patients.html",patients=patients,names=names,message=message)
     else:
         abort(405,description="Method not allowed")
