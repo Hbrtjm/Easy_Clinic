@@ -3,8 +3,8 @@ Application allows user to add a new patient,  delete a patient and list patient
 
 # The application can be started in two ways:
 
-    1. Using only CLI
-    2. Using docker
+1. Using only CLI
+2. Using docker
 
 # Using only CLI
 
@@ -54,7 +54,7 @@ python -m flask run
 docker build -t flask-app .
 ```
 
-    This command creates a Docker image named `flask-app`. The `.` at the end of the command denotes the current directory as the build context.
+This command creates a Docker image named `flask-app`. The `.` at the end of the command denotes the current directory as the build context.
 
 ## Running the Docker Container
 
@@ -64,6 +64,6 @@ docker build -t flask-app .
 docker run -p 5000:5000 flask-app
 ```
 
-    The `-p 5000:5000` option maps port 5000 of the container to port 5000 on your host machine.
+The `-p 5000:5000` option maps port 5000 of the container to port 5000 on your host machine.
 
 5. Access your Flask application by navigating to `http://0.0.0.0:5000` in your web browser.
