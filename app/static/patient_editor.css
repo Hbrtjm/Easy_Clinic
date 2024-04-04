@@ -1,5 +1,31 @@
 /* ========================  Html elements ========================*/
 
+form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* ========================  Html elements ========================*/
+
+/* ========================  Classes ======================== */
+
+.input-box {
+    cursor: text;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
 .form-container button {
     width: 100%;
     padding: 10px;
@@ -16,31 +42,6 @@
     background-color: #004494;
 }
 
-form h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* ========================  Html elements ========================*/
-
-/* ========================  Classes ======================== */
-.input-box {
-    cursor: text;
-    display: block;
-    margin-bottom: 30px;
-}
-
-.form-container {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
 .form-group {
     margin-bottom: 15px;
 }
@@ -53,6 +54,15 @@ form h2 {
 
 .form-group input {
     width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group select {
+    width: 100%;
+    margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;

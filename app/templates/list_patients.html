@@ -2,17 +2,52 @@
 {% block title %}Listing patients{% endblock %}
 {% block head %}
 {{ super() }}
-
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static',filename='list_patients.css')}}">
+{% endblock %}
 {% endblock %}
 
 {% block content %}
 <main>
-    <form function="GET">
-        <input type="text" id="search" placeholder="Wpisz szukanego pacjenta">
-        <button type="submit">Search</button>
+    <div class="form-container">
+    <form action="/list-patients-search" method="POST">
+        <div class="search-box">
+            <input type="text" id="search" name="search" placeholder="Input your query...">
+            <select name="option" id="option">
+                <option value="name">Name</option>
+                <option value="surname">Surname</option>
+                <option value="street">Street</option>
+                <option value="zip_code">Zip code</option>
+                <option value="city">City</option>
+            </select> 
+            <button type="submit">Search</button>
+        </div>
     </form>
-    <form>
-
+    <form action="/list-patients-sort" method="POST">
+        <div class="sort-box">
+            <select name="option" id="option">
+                <option value="name">Name</option>
+                <option value="surname">Surname</option>
+                <option value="street">Street</option>
+                <option value="zip_code">Zip code</option>
+                <option value="city">City</option>
+            </select>
+            <button type="submit">Sort</button>
+        </div>
     </form>
+    </div>
+    <div id="container">
+        <h2>List of patients</h2>
+        <div id="bar">
+        </div>
+        <div id="patients-content">
+        {% for patient in patients %}
+            {% for element in patient %}
+                <p>{{ names[loop.index-1] }}: {{ patient[element] }}<p>
+            {% endfor %}
+            <br>
+        {% endfor %}
+        </div>
+    </div>
 </main>
 {% endblock %}
