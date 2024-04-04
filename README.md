@@ -12,27 +12,30 @@ On linux machine open up terminal. Alternatively, on windows any IDE's should wo
 
 ##    Downloading files
         
-        Clone this repository to your local machine using:
-        ```bash
-        git clone https://github.com/Hbrtjm/Essato_internship
-        ```
+1. Clone this repository to your local machine using:
+
+```bash
+git clone https://github.com/Hbrtjm/Essato_internship
+```
 ## Install dependencies
         
-        Install dependencies from requirements.txt:
-        ```bash
-        python -m pip install --no-cache-dir -r requirements.txt
-        ```
+2. Install dependencies from requirements.txt:
+
+```bash
+python -m pip install --no-cache-dir -r requirements.txt
+```
 
 ## Start the app
 
-        To start the application run:
-        ```bash
-        python -m flask run
-        ```
+3. To start the application run:
+
+```bash
+python -m flask run
+```
 
 ## Accessing the page
 
-        After running the app in terminal there should be a url to localhost. Use this link in any browser.
+4. After running the app in terminal there should be a url to localhost. Use this link in any browser. The address shoudl be `http://0.0.0.0:5000`
 
 
 ### Using docker 
@@ -47,22 +50,20 @@ On linux machine open up terminal. Alternatively, on windows any IDE's should wo
 
 3. Build your Docker image by running:
 
-    ```bash
-    docker build -t flask-app .
-    ```
+```bash
+docker build -t flask-app .
+```
 
     This command creates a Docker image named `flask-app`. The `.` at the end of the command denotes the current directory as the build context.
 
 ## Running the Docker Container
 
-Once the image has been successfully built, you can run it:
+4. Once the image has been successfully built, you can run it. Execute the following command:
 
-1. Execute the following command:
-
-    ```bash
-    docker run -p 5000:5000 flask-app
-    ```
+```bash
+docker run -p 5000:5000 flask-app
+```
 
     The `-p 5000:5000` option maps port 5000 of the container to port 5000 on your host machine.
 
-2. Access your Flask application by navigating to `http://0.0.0.0:5000` in your web browser.
+5. Access your Flask application by navigating to `http://0.0.0.0:5000` in your web browser.
