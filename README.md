@@ -1,4 +1,4 @@
-# Essato_internship
+# Easy Clinc
 Application allows user to add a new patient,  delete a patient and list patients into a database.
 
 # The application can be started in two ways:
